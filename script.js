@@ -19,6 +19,7 @@ function displayStudents() {
             <thead>
                 <tr>
                     <th>Rank</th>
+                    <th>Roll No</th>
                     <th>Name</th>
                     <th>Tamil</th>
                     <th>English</th>
@@ -40,6 +41,7 @@ function displayStudents() {
         tableHTML += `
             <tr>
                 <td>${index + 1}</td>
+                <td><strong>${student.rollNo || '-'}</strong></td>
                 <td>${student.name}</td>
                 <td><span class="subject-score">${student.tamil}</span></td>
                 <td><span class="subject-score">${student.english}</span></td>
@@ -98,12 +100,23 @@ function displayStats() {
 }
 
 function addStudent() {
+    const rollNo = document.getElementById('rollNo').value.trim();
     const name = document.getElementById('studentName').value.trim();
     const tamil = parseFloat(document.getElementById('tamil').value);
     const english = parseFloat(document.getElementById('english').value);
     const maths = parseFloat(document.getElementById('maths').value);
     const science = parseFloat(document.getElementById('science').value);
     const socialscience = parseFloat(document.getElementById('socialscience').value);
+
+    if (!rollNo) {
+        alert('Please enter Roll Number');
+        return;
+    }
+
+    if (students.some(s => s.rollNo && s.rollNo.toLowerCase() === rollNo.toLowerCase())) {
+        alert('Roll Number already exists!');
+        return;
+    }
 
     if (!name) {
         alert('Please enter student name');
@@ -126,6 +139,7 @@ function addStudent() {
 
     const student = {
         id: Date.now().toString(),
+        rollNo,
         name,
         tamil,
         english,
@@ -138,6 +152,7 @@ function addStudent() {
     students.push(student);
     localStorage.setItem('students', JSON.stringify(students));
 
+    document.getElementById('rollNo').value = '';
     document.getElementById('studentName').value = '';
     document.getElementById('tamil').value = '';
     document.getElementById('english').value = '';
@@ -165,12 +180,12 @@ function exportAsCSV() {
         return;
     }
 
-    let csv = 'Rank,Name,Tamil,English,Maths,Science,Social Science,Total Score,Average,Grade\n';
+    let csv = 'Rank,Roll No,Name,Tamil,English,Maths,Science,Social Science,Total Score,Average,Grade\n';
 
     students.forEach((student, index) => {
         const grade = getGrade(student.average);
         const totalScore = student.tamil + student.english + student.maths + student.science + student.socialscience;
-        csv += `${index + 1},"${student.name}",${student.tamil},${student.english},${student.maths},${student.science},${student.socialscience},${totalScore},${student.average.toFixed(2)},${grade}\n`;
+        csv += `${index + 1},"${student.rollNo || '-'}","${student.name}",${student.tamil},${student.english},${student.maths},${student.science},${student.socialscience},${totalScore},${student.average.toFixed(2)},${grade}\n`;
     });
 
     const dataBlob = new Blob([csv], { type: 'text/csv' });
@@ -239,7 +254,7 @@ function showDeletedData() {
             const grade = getGrade(student.average);
             html += `
                 <div class="deleted-item">
-                    <p><strong>${student.name}</strong></p>
+                    <p><strong>${student.name} ${student.rollNo ? `(Roll No: ${student.rollNo})` : ''}</strong></p>
                     <p>Total Score: ${totalScore}/500 | Average: ${student.average.toFixed(2)} | Grade: ${grade}</p>
                     <div class="deleted-item-actions">
                         <button class="recover-btn" onclick="recoverStudent('${student.id}')">✓ Recover</button>
