@@ -158,68 +158,6 @@ export default function StudentScoreSystem() {
     }
   };
 
-  const loadSampleData = () => {
-    const sampleStudents = [
-      {
-        id: Date.now().toString() + '1',
-        rollNo: '101',
-        name: 'Arjun Kumar',
-        tamil: 95,
-        english: 88,
-        maths: 92,
-        science: 90,
-        socialscience: 87,
-        average: (95 + 88 + 92 + 90 + 87) / 5
-      },
-      {
-        id: Date.now().toString() + '2',
-        rollNo: '102',
-        name: 'Priya Sharma',
-        tamil: 88,
-        english: 92,
-        maths: 85,
-        science: 89,
-        socialscience: 91,
-        average: (88 + 92 + 85 + 89 + 91) / 5
-      },
-      {
-        id: Date.now().toString() + '3',
-        rollNo: '103',
-        name: 'Rohan Patel',
-        tamil: 78,
-        english: 82,
-        maths: 88,
-        science: 85,
-        socialscience: 80,
-        average: (78 + 82 + 88 + 85 + 80) / 5
-      },
-      {
-        id: Date.now().toString() + '4',
-        rollNo: '104',
-        name: 'Ananya Singh',
-        tamil: 92,
-        english: 90,
-        maths: 95,
-        science: 93,
-        socialscience: 89,
-        average: (92 + 90 + 95 + 93 + 89) / 5
-      },
-      {
-        id: Date.now().toString() + '5',
-        rollNo: '105',
-        name: 'Vikram Reddy',
-        tamil: 85,
-        english: 78,
-        maths: 80,
-        science: 82,
-        socialscience: 86,
-        average: (85 + 78 + 80 + 82 + 86) / 5
-      }
-    ];
-
-    saveStudents(sampleStudents);
-    alert('Sample data loaded! You can now see the system in action.');
-  };
 
   const exportAsCSV = () => {
     if (students.length === 0) {
@@ -401,7 +339,6 @@ export default function StudentScoreSystem() {
             <button onClick={importData} style={{ background: '#2196f3' }}>Import Data</button>
             <button onClick={() => setShowDeletedModal(true)} style={{ background: '#9c27b0' }}>🗑️ Recover Deleted</button>
             <button onClick={clearAllData} style={{ background: '#d32f2f' }}>Clear All</button>
-            <button onClick={loadSampleData} style={{ background: '#4caf50' }}>Load Samples</button>
             <input
               type="file"
               id="fileInput"
