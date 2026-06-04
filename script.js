@@ -301,6 +301,18 @@ window.onclick = (event) => {
     }
 };
 
+// Expose functions to window scope for HTML inline handlers
+window.addStudent = addStudent;
+window.deleteStudent = deleteStudent;
+window.exportAsCSV = exportAsCSV;
+window.importData = importData;
+window.handleFileImport = handleFileImport;
+window.clearAllData = clearAllData;
+window.showDeletedData = showDeletedData;
+window.closeDeletedModal = closeDeletedModal;
+window.recoverStudent = recoverStudent;
+window.permanentlyDelete = permanentlyDelete;
+
 // Display students on page load
 displayStudents();
 
